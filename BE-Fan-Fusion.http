@@ -1,0 +1,6 @@
+@BE_Fan_Fusion_HostAddress = http://localhost:5045
+
+GET {{BE_Fan_Fusion_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
