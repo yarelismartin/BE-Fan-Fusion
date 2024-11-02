@@ -19,17 +19,17 @@ namespace BE_Fan_Fusion.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           // modelBuilder.Entity<Story>().HasData(StoryData.Stories);
+          modelBuilder.Entity<Story>().HasData(StoryData.Stories);
 
-          //  modelBuilder.Entity<Tag>().HasData(TagData.Tags);
+          modelBuilder.Entity<Tag>().HasData(TagData.Tags);
 
-          //  modelBuilder.Entity<User>().HasData(UserData.Users);
+          modelBuilder.Entity<User>().HasData(UserData.Users);
 
-           // modelBuilder.Entity<Chapter>().HasData(ChapterData.Chapters);
+          modelBuilder.Entity<Chapter>().HasData(ChapterData.Chapters);
 
-          //  modelBuilder.Entity<Comment>().HasData(CommentData.Comments);
+          modelBuilder.Entity<Comment>().HasData(CommentData.Comments);
 
-           // modelBuilder.Entity<Category>().HasData(CategoryData.Categories);
+          modelBuilder.Entity<Category>().HasData(CategoryData.Categories);
 
         }
 

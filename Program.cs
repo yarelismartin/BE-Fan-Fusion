@@ -13,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // allows our api endpoints to access the database through Entity Framework Core
-//builder.Services.AddNpgsql<FanFusionDbContext>(builder.Configuration["FanFusionDbConnectionString"]);
+builder.Services.AddNpgsql<FanFusionDbContext>(builder.Configuration["BE-FanFusionDbConnectionString"]);
+
 
 // Set the JSON serializer options
 builder.Services.Configure<JsonOptions>(options =>
