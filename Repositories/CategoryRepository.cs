@@ -1,5 +1,6 @@
 ﻿using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.Interfaces;
+using BE_Fan_Fusion.Models;
 
 namespace BE_Fan_Fusion.Repositories
 {
@@ -10,6 +11,11 @@ namespace BE_Fan_Fusion.Repositories
         public CategoryRepository(FanFusionDbContext context)
         {
             dbContext = context;
+        }
+
+        public Task<List<Category>> GetCategoriesAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
