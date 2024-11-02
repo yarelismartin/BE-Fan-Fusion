@@ -1,6 +1,9 @@
 using BE_Fan_Fusion.Data;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
+using BE_Fan_Fusion.Interfaces;
+using BE_Fan_Fusion.Repositories;
+using BE_Fan_Fusion.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +20,24 @@ builder.Services.Configure<JsonOptions>(options =>
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
-//builder.Services.AddScoped<IBookService, BookService>();
-//builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-//builder.Services.AddScoped<IAuthorService, AuthorService>();
-//builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<IChapterService, ChapterService>();
+builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
+
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
+builder.Services.AddScoped<IStoryService, StoryService>();
+builder.Services.AddScoped<IStoryRepository, StoryRepository>();
+
+builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
