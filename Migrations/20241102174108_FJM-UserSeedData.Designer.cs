@@ -3,6 +3,7 @@ using System;
 using BE_Fan_Fusion.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BE_Fan_Fusion.Migrations
 {
     [DbContext(typeof(FanFusionDbContext))]
-    partial class FanFusionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241102174108_FJM-UserSeedData")]
+    partial class FJMUserSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -807,42 +809,42 @@ namespace BE_Fan_Fusion.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "fletcher@example.com",
-                            FirstName = "Fletcher",
-                            Image = "https://ca.slack-edge.com/T03F2SDTJ-U06ANN13BJA-a6223b135600-512",
-                            LastName = "Moore",
-                            Uid = "spB8Zq4wELSQ2CYU8B85GAlo9UF3",
-                            Username = "fletcher_moore"
+                            Email = "john@example.com",
+                            FirstName = "John",
+                            Image = "https://example.com/images/john.jpg",
+                            LastName = "Doe",
+                            Uid = "user001",
+                            Username = "john_doe"
                         },
                         new
                         {
                             Id = 2,
-                            Email = "yarelis@example.com",
-                            FirstName = "Yarelis",
-                            Image = "https://ca.slack-edge.com/T03F2SDTJ-U06964LME06-e7ae012d8792-512",
-                            LastName = "Martin",
-                            Uid = "BoMhkHml16cdAERkecfxE2RRMqO2",
-                            Username = "yarelis_martin"
+                            Email = "jane@example.com",
+                            FirstName = "Jane",
+                            Image = "https://example.com/images/jane.jpg",
+                            LastName = "Smith",
+                            Uid = "user002",
+                            Username = "jane_smith"
                         },
                         new
                         {
                             Id = 3,
-                            Email = "sirrena@example.com",
-                            FirstName = "Sirena",
-                            Image = "https://ca.slack-edge.com/T03F2SDTJ-U079DCXBYHW-e4fd2297a065-512",
-                            LastName = "Foster",
-                            Uid = "MxzBtnidXFYcqBl2zw0unXm6Vbl2",
-                            Username = "sirena_foster"
+                            Email = "alice@example.com",
+                            FirstName = "Alice",
+                            Image = "https://example.com/images/alice.jpg",
+                            LastName = "Johnson",
+                            Uid = "user003",
+                            Username = "alice_johnson"
                         },
                         new
                         {
                             Id = 4,
-                            Email = "casey@example.com",
-                            FirstName = "Casey",
-                            Image = "https://ca.slack-edge.com/T03F2SDTJ-U078T3MSH0U-2ccec7b81ad3-512",
-                            LastName = "Cunningham",
-                            Uid = "t3CunL7C0nUSf9a28dcqBZs3J9y1",
-                            Username = "casey_cunningham"
+                            Email = "bob@example.com",
+                            FirstName = "Bob",
+                            Image = "https://example.com/images/bob.jpg",
+                            LastName = "Brown",
+                            Uid = "user004",
+                            Username = "bob_brown"
                         },
                         new
                         {
@@ -859,7 +861,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 6,
                             Email = "eve@example.com",
                             FirstName = "Eve",
-                            Image = "https://i.pinimg.com/564x/2a/8a/6d/2a8a6d14195e800e21d58d25c96d6e4a.jpg",
+                            Image = "https://example.com/images/eve.jpg",
                             LastName = "Wilson",
                             Uid = "user006",
                             Username = "eve_wilson"
@@ -879,7 +881,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 8,
                             Email = "fiona@example.com",
                             FirstName = "Fiona",
-                            Image = "https://preview.redd.it/generic-e-girl-face-v0-4hqohs5o1h6a1.jpg?width=640&crop=smart&auto=webp&s=bc432d97ba360c6412daa30e0cb5d00d25e35d1e",
+                            Image = "https://example.com/images/fiona.jpg",
                             LastName = "Taylor",
                             Uid = "user008",
                             Username = "fiona_taylor"
@@ -889,7 +891,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 9,
                             Email = "george@example.com",
                             FirstName = "George",
-                            Image = "https://media.istockphoto.com/id/1020474390/photo/displeased-mature-man.jpg?s=612x612&w=0&k=20&c=LgsEpwyAuPXh7VcYoQooNb7Jh7U7pl1l9xzwm0SC-is=",
+                            Image = "https://example.com/images/george.jpg",
                             LastName = "Anderson",
                             Uid = "user009",
                             Username = "george_anderson"
@@ -899,7 +901,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 10,
                             Email = "hannah@example.com",
                             FirstName = "Hannah",
-                            Image = "https://thumbs.dreamstime.com/b/teen-girl-orange-shirt-10766265.jpg",
+                            Image = "https://example.com/images/hannah.jpg",
                             LastName = "Thomas",
                             Uid = "user890",
                             Username = "hannah_thomas"
@@ -909,7 +911,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 11,
                             Email = "ian@example.com",
                             FirstName = "Ian",
-                            Image = "https://media.istockphoto.com/id/181894143/photo/nervous-young-man.jpg?s=612x612&w=0&k=20&c=VGM3L-GNjuU6azlEu9HWgSR872iObXPJ81AyjUqD8AQ=",
+                            Image = "https://example.com/images/ian.jpg",
                             LastName = "Jackson",
                             Uid = "user567",
                             Username = "ian_jackson"
@@ -919,7 +921,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 12,
                             Email = "jack@example.com",
                             FirstName = "Jack",
-                            Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa3HD9NGpcssX7w3fcMClAQtN6Xa638VkEHg&s",
+                            Image = "https://example.com/images/jack.jpg",
                             LastName = "White",
                             Uid = "user234",
                             Username = "jack_white"
@@ -929,7 +931,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 13,
                             Email = "kathy@example.com",
                             FirstName = "Kathy",
-                            Image = "https://thumbs.dreamstime.com/b/woman-wearing-black-generic-glasses-happy-43745660.jpg",
+                            Image = "https://example.com/images/kathy.jpg",
                             LastName = "Garcia",
                             Uid = "user789",
                             Username = "kathy_garcia"
@@ -939,7 +941,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 14,
                             Email = "liam@example.com",
                             FirstName = "Liam",
-                            Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAnWbXLAOuwYf2v-B7jQedXh_QVlUNPoqdhEpxc_OC5BeSx7YRtvaDlebgEpxBIg_Qr9s&usqp=CAU",
+                            Image = "https://example.com/images/liam.jpg",
                             LastName = "Martinez",
                             Uid = "user456",
                             Username = "liam_martinez"
@@ -949,7 +951,7 @@ namespace BE_Fan_Fusion.Migrations
                             Id = 15,
                             Email = "mia@example.com",
                             FirstName = "Mia",
-                            Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS24W-X-ipaKgDC5RYy4mUbOh6SpAExS7_7gIVeN1nc-dud4ybbFEfj0qcP6PIF4dh3I3I&usqp=CAU",
+                            Image = "https://example.com/images/mia.jpg",
                             LastName = "Hernandez",
                             Uid = "user123",
                             Username = "mia_hernandez"
