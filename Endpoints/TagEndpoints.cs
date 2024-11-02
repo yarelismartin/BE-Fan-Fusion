@@ -2,9 +2,9 @@
 
 namespace BE_Fan_Fusion.Endpoints
 {
-    public static class TagEndpoint
+    public static class TagEndpoints
     {
-        public static void MapTagEndpoint(this IEndpointRouteBuilder routes)
+        public static void MapTagEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("").WithTags(nameof(Tag));
         }

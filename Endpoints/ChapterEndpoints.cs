@@ -2,9 +2,9 @@
 
 namespace BE_Fan_Fusion.Endpoints
 {
-    public static class ChapterEndpoint
+    public static class ChapterEndpoints
     {
-        public static void MapChapterEndpoint(this IEndpointRouteBuilder routes)
+        public static void MapChapterEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("").WithTags(nameof(Chapter));
         }

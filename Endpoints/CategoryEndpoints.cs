@@ -5,7 +5,7 @@ namespace BE_Fan_Fusion.Endpoints
 {
     public static class CategoryEndpoint
     {
-        public static void MapCategoryEndpoint(this  IEndpointRouteBuilder routes)
+        public static void MapCategoryEndpoints(this  IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("").WithTags(nameof(Category));
         }

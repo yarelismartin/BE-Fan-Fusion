@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http.Json;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Repositories;
 using BE_Fan_Fusion.Services;
+using BE_Fan_Fusion.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,5 +55,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapCategoryEndpoints();
+app.MapChapterEndpoints();
+app.MapCommentEndpoints();
+app.MapStoryEndpoints();
+app.MapTagEndpoints();
+app.MapUserEndpoints();
 
 app.Run();
