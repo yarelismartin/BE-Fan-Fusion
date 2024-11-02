@@ -1,6 +1,14 @@
-﻿namespace BE_Fan_Fusion;
+﻿using BE_Fan_Fusion.Models;
 
-public class Tag
+namespace BE_Fan_Fusion.Models
 {
+
+    public class Tag
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<Story> Stories { get; set; }
+
+    }
 
 }
