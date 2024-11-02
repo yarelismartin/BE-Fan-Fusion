@@ -13,31 +13,31 @@ namespace BE_Fan_Fusion.Repositories
         {
             dbContext = context;
         }
-        public Task<List<Story>> GetStoriesAsync()
+        public async Task<List<Story>> GetStoriesAsync()
         {
             throw new NotImplementedException();
         }
-        public Task<Story> GetStoryByIdAsync(int storyId)
+        public async Task<Story> GetStoryByIdAsync(int storyId)
         {
             throw new NotImplementedException();
         }
-        public Task<Story> CreateStoryAsync(Story story)
+        public async Task<Story> CreateStoryAsync(Story story)
         {
             throw new NotImplementedException();
         }
-        public Task<Story> UpdateStoryAsync(Story story, int storyId)
+        public async Task<Story> UpdateStoryAsync(Story story, int storyId)
         {
             throw new NotImplementedException();
         }
-        public Task<Story> DeleteStoryAsync(int storyId)
+        public async Task<Story> DeleteStoryAsync(int storyId)
         {
             throw new NotImplementedException();
         }
-        public Task<List<Story>> SearchStoriesAsync(string searchValue)
+        public async Task<List<Story>> SearchStoriesAsync(string searchValue)
         {
             throw new NotImplementedException();
         }
-        public Task<List<Story>> GetStoriesByCategoryIdAsync(int categoryId)
+        public async Task<List<Story>> GetStoriesByCategoryIdAsync(int categoryId)
         {
             throw new NotImplementedException();
         }

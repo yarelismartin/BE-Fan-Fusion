@@ -13,17 +13,17 @@ namespace BE_Fan_Fusion.Repositories
             dbContext = context;
         }
 
-        public Task<Chapter> GetChapterByIdAsync(int chapterId)
+        public async Task<Chapter> GetChapterByIdAsync(int chapterId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Chapter> CreateAndUpdateChapterAsync(Chapter chapter)
+        public async Task<Chapter> CreateAndUpdateChapterAsync(Chapter chapter)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Chapter> DeleteChapterAsync(int chapterId)
+        public async Task<Chapter> DeleteChapterAsync(int chapterId)
         {
             throw new NotImplementedException();
         }

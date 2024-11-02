@@ -13,11 +13,11 @@ namespace BE_Fan_Fusion.Repositories
         {
             dbContext = context;
         }
-        public Task<User> CheckUserAsync(string userUid)
+        public async Task<User> CheckUserAsync(string userUid)
         {
             throw new NotImplementedException();
         }
-        public Task<User> GetUserByIdAsync(int userId)
+        public async Task<User> GetUserByIdAsync(int userId)
         {
             throw new NotImplementedException();
         }

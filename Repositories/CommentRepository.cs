@@ -14,11 +14,11 @@ namespace BE_Fan_Fusion.Repositories
             dbContext = context;
         }
 
-        public Task<Comment> CreateCommentAsync(Comment comment)
+        public async Task<Comment> CreateCommentAsync(Comment comment)
         {
             throw new NotImplementedException();
         }
-        public Task<Comment> DeleteCommentAsync(int commentId)
+        public async Task<Comment> DeleteCommentAsync(int commentId)
         {
             throw new NotImplementedException();
         }

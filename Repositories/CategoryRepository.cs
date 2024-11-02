@@ -13,7 +13,7 @@ namespace BE_Fan_Fusion.Repositories
             dbContext = context;
         }
 
-        public Task<List<Category>> GetCategoriesAsync()
+        public async Task<List<Category>> GetCategoriesAsync()
         {
             throw new NotImplementedException();
         }

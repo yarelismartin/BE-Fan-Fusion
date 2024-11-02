@@ -13,11 +13,11 @@ namespace BE_Fan_Fusion.Repositories
         {
             dbContext = context;
         }
-        public Task<List<Tag>> GetAllTagsAsync()
+        public async Task<List<Tag>> GetAllTagsAsync()
         {
             throw new NotImplementedException();
         }
-        public Task<Tag> GetTagByIdAsync(int tagId)
+        public async Task<Tag> GetTagByIdAsync(int tagId)
         {
             throw new NotImplementedException();
         }
