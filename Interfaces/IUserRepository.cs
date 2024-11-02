@@ -4,8 +4,8 @@ namespace BE_Fan_Fusion.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> CheckUser(string userUid);
-        Task<User> GetUserById(int userId);
+        Task<User> CheckUserAsync(string userUid);
+        Task<User> GetUserByIdAsync(int userId);
 
     }
 }
