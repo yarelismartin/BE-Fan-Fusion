@@ -1,5 +1,6 @@
 using BE_Fan_Fusion.Data;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
