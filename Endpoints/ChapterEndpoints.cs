@@ -44,7 +44,7 @@ namespace BE_Fan_Fusion.Endpoints
                 });
             });
 
-
+  
 
         }
     }
