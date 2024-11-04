@@ -14,13 +14,16 @@ namespace BE_Fan_Fusion.Repositories
         {
             dbContext = context;
         }
-        public async Task<User> CheckUserAsync(string userUid)
+        public async Task<User?> CheckUserAsync(string userUid)
         {
             return await dbContext.Users.FirstOrDefaultAsync(u => u.Uid == userUid);
         }
-        public async Task<User> GetUserByIdAsync(int userId)
+        public async Task<User?> GetUserByIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            return await dbContext.Users
+                .Include(s => s.Stories)
+                .Include(s => s.Chapters)
+                .SingleOrDefaultAsync(u => u.Id == userId);
         }
 
     }

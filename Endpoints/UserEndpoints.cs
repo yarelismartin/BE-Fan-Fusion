@@ -1,4 +1,5 @@
 ﻿using BE_Fan_Fusion.Data;
+using BE_Fan_Fusion.DTO;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
 
@@ -29,6 +30,31 @@ namespace BE_Fan_Fusion.Endpoints
                     userCheck.Email,
                     userCheck.Image,
                     userCheck.Uid
+                });
+            });
+
+            group.MapGet("/users/{userId}", async (IUserService userService, int userId) =>
+            {
+                User? user = await userService.GetUserByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return Results.NotFound($"There is no user with the following id: {userId}");
+                }
+
+                return Results.Ok(new
+                {
+                    user.Id,
+                    user.FirstName,
+                    user.LastName,
+                    user.Image,
+                    user.Username,
+                    user.Email,
+                    user.Uid,
+                    Stories = user.Stories?.Select(story => new StoryDTO(story)).ToList(),
+                    Chapters = user.Chapters?.Select(chapter => new ChapterDto(chapter))
+                        .Where(chapter => chapter.SaveAsDraft == true)
+                        .OrderByDescending(chapter => chapter.DateCreated),
                 });
             });
         }
