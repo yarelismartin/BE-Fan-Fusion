@@ -1,6 +1,7 @@
 ﻿using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BE_Fan_Fusion.Repositories
 {
@@ -15,11 +16,13 @@ namespace BE_Fan_Fusion.Repositories
         }
         public async Task<List<Tag>> GetAllTagsAsync()
         {
-            throw new NotImplementedException();
+            return await dbContext.Tags.ToListAsync();
         }
-        public async Task<Tag> GetTagByIdAsync(int tagId)
+        public async Task<Tag?> GetTagByIdAsync(int tagId)
         {
-            throw new NotImplementedException();
+            return await dbContext.Tags
+                .Include(t => t.Stories)
+                .SingleOrDefaultAsync(t => t.Id == tagId);
         }
     }
 }

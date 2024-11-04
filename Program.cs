@@ -6,6 +6,7 @@ using BE_Fan_Fusion.Repositories;
 using BE_Fan_Fusion.Services;
 using BE_Fan_Fusion.Endpoints;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
