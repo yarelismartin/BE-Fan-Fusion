@@ -13,7 +13,7 @@ namespace BE_Fan_Fusion.Services
             _chapterRepository = chapterRepository;
         }
 
-        public async Task<Chapter> GetChapterByIdAsync(int chapterId)
+        public async Task<Chapter?> GetChapterByIdAsync(int chapterId)
         {
             return await _chapterRepository.GetChapterByIdAsync(chapterId);
         }
