@@ -34,7 +34,7 @@ namespace BE_Fan_Fusion.Services
 
             return await _commentRepository.CreateCommentAsync(comment);
         }
-        public async Task<Comment> DeleteCommentAsync(int commentId)
+        public async Task<Comment?> DeleteCommentAsync(int commentId)
         {
             return await _commentRepository.DeleteCommentAsync(commentId);
         }

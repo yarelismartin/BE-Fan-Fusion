@@ -7,6 +7,6 @@ namespace BE_Fan_Fusion.Interfaces
         Task<Comment> CreateCommentAsync(Comment comment);
         Task<bool> UserExistsAsync(int userId);
         Task<bool> ChapterExistsAsync(int chapterId);
-        Task<Comment> DeleteCommentAsync(int commentId);
+        Task<Comment?> DeleteCommentAsync(int commentId);
     }
 }

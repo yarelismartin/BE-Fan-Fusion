@@ -5,6 +5,6 @@ namespace BE_Fan_Fusion.Interfaces
     public interface ICommentService
     {
         Task<Comment> CreateCommentAsync(Comment newComment);
-        Task<Comment> DeleteCommentAsync(int commentId);
+        Task<Comment?> DeleteCommentAsync(int commentId);
     }
 }

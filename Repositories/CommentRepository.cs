@@ -30,9 +30,19 @@ namespace BE_Fan_Fusion.Repositories
         {
             return await dbContext.Chapters.AnyAsync(chapter => chapter.Id == chapterId);
         }
-        public async Task<Comment> DeleteCommentAsync(int commentId)
+        public async Task<Comment?> DeleteCommentAsync(int commentId)
         {
-            throw new NotImplementedException();
+            var comment = await dbContext.Comments.SingleOrDefaultAsync(comment => comment.Id == commentId);
+
+            if (comment != null)
+            {
+                dbContext.Comments.Remove(comment);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return comment;
+
+
         }
 
     }
