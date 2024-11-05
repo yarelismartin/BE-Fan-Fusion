@@ -40,5 +40,38 @@ namespace BE_Fan_Fusion.Services
         {
             return await _storyRepository.GetStoriesByCategoryIdAsync(categoryId);
         }
+        public async Task<(bool Success, string Message)> ToggleFavoriteStoriesAsync(int storyId, int userId)
+        {
+
+
+            var user =  await _storyRepository.GetUserWithFavoritedStoriesAsync(userId);
+            if (user == null)
+            {
+                return (false, $"There is no user with the following id: {userId}");
+            }
+            var story = await _storyRepository.GetSingleStoryAsync(storyId);
+            if (story == null)
+            {
+                return (false, $"There is no story with the following id: {storyId}");
+            }
+
+            bool IsFavorite;
+
+            if (user.FavoritedStories.Contains(story))
+            {
+                await _storyRepository.RemoveFavoritedStoryAsync(story, user);
+                IsFavorite = false;
+            }
+            else
+            {
+                await _storyRepository.AddFavoritedStoryAsync(story, user);
+                IsFavorite = true;
+            }
+            
+            return (true, IsFavorite ? "Story added to favorites." : "Story removed from favorites.");
+
+
+        }
+
     }
 }

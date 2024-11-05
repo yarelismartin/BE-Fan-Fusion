@@ -1,6 +1,7 @@
 ﻿using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BE_Fan_Fusion.Repositories
 {
@@ -41,6 +42,28 @@ namespace BE_Fan_Fusion.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task<User?> GetUserWithFavoritedStoriesAsync(int userId)
+        {
+            return await dbContext.Users
+                .Include(u => u.FavoritedStories)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+        }
+        public async Task<Story?> GetSingleStoryAsync(int storyId)
+        {
+            return await dbContext.Stories
+                .FirstOrDefaultAsync(s => s.Id == storyId);
+        }
+        public async Task AddFavoritedStoryAsync(Story story, User user)
+        {
+            user.FavoritedStories.Add(story);
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task RemoveFavoritedStoryAsync(Story story, User user)
+        {
+            user.FavoritedStories.Remove(story);
+            await dbContext.SaveChangesAsync();
+
+        }
     }
 }
-
