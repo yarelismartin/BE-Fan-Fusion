@@ -62,9 +62,10 @@ namespace BE_Fan_Fusion.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<string> RemoveTagFromStory(int tagId, int storyId)
+        public async Task RemoveTag(Story story, Tag tag)
         {
-            throw new NotImplementedException();
+            story.Tags.Remove(tag);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

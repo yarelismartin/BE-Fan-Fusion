@@ -33,9 +33,30 @@ namespace BE_Fan_Fusion.Services
             return ( true, "Tag added to the story successfully");
 
         }
-        public async Task<string> RemoveTagFromStory(int tagId, int storyId)
+        public async Task<(bool Success, string Message)> RemoveTagFromStory(int tagId, int storyId)
         {
-            return await _storyTagRepository.RemoveTagFromStory(tagId, storyId);
+            var story = await _storyTagRepository.GetStoryWithTags(storyId);
+
+            if (story == null)
+            {
+                return (false, $"There is no story with the following id: {storyId}");
+            }
+
+            var tag = await _storyTagRepository.GetTagById(tagId);
+
+            if (tag == null)
+            {
+                return (false, $"There is no tag with the following id: {tagId}");
+            }
+
+            if (!story.Tags.Contains(tag))
+            {
+                return (false, "This story does not have this tag.");
+            }
+
+
+            await _storyTagRepository.RemoveTag(story, tag);
+            return (true, "Tag removed from story successfully");
         }
     }
 }
