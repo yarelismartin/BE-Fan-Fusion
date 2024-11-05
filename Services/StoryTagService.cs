@@ -12,7 +12,7 @@ namespace BE_Fan_Fusion.Services
         {
             _storyTagRepository = storyTagRepository;
         }
-        public async Task<(bool Success, string Message)> AddTagToStory(int tagId, int storyId)
+        public async Task<(bool Success, string Message)> AddTagToStoryAsync(int tagId, int storyId)
         {
             var story = await _storyTagRepository.GetStoryWithTagsAsync(storyId);
             if (story == null)
@@ -33,7 +33,7 @@ namespace BE_Fan_Fusion.Services
             return ( true, "Tag added to the story successfully");
 
         }
-        public async Task<(bool Success, string Message)> RemoveTagFromStory(int tagId, int storyId)
+        public async Task<(bool Success, string Message)> RemoveTagFromStoryAsync(int tagId, int storyId)
         {
             var story = await _storyTagRepository.GetStoryWithTagsAsync(storyId);
 
