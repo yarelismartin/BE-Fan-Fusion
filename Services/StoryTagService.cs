@@ -14,12 +14,12 @@ namespace BE_Fan_Fusion.Services
         }
         public async Task<(bool Success, string Message)> AddTagToStory(int tagId, int storyId)
         {
-            var story = await _storyTagRepository.GetStoryWithTags(storyId);
+            var story = await _storyTagRepository.GetStoryWithTagsAsync(storyId);
             if (story == null)
             {
                 return (false, $"There is no story with the following id: {storyId}");
             }
-            var tag = await _storyTagRepository.GetTagById(tagId);
+            var tag = await _storyTagRepository.GetTagByIdAsync(tagId);
             if (tag == null)
             {
                 return (false, $"There is no tag with the following id: {tagId}");
@@ -29,20 +29,20 @@ namespace BE_Fan_Fusion.Services
             {
                 return (false, "This story already has this tag.");
             }
-            await _storyTagRepository.AddTag(story, tag);
+            await _storyTagRepository.AddTagAsync(story, tag);
             return ( true, "Tag added to the story successfully");
 
         }
         public async Task<(bool Success, string Message)> RemoveTagFromStory(int tagId, int storyId)
         {
-            var story = await _storyTagRepository.GetStoryWithTags(storyId);
+            var story = await _storyTagRepository.GetStoryWithTagsAsync(storyId);
 
             if (story == null)
             {
                 return (false, $"There is no story with the following id: {storyId}");
             }
 
-            var tag = await _storyTagRepository.GetTagById(tagId);
+            var tag = await _storyTagRepository.GetTagByIdAsync(tagId);
 
             if (tag == null)
             {
@@ -55,7 +55,7 @@ namespace BE_Fan_Fusion.Services
             }
 
 
-            await _storyTagRepository.RemoveTag(story, tag);
+            await _storyTagRepository.RemoveTagAsync(story, tag);
             return (true, "Tag removed from story successfully");
         }
     }

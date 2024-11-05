@@ -12,7 +12,7 @@ namespace BE_Fan_Fusion.Endpoints
 
             group.MapPost("/{storyId}/add-tag/{tagId}", async (IStoryTagService storyTagService, int tagId, int storyId) =>
             {
-                var (success, message) = await storyTagService.AddTagToStory(tagId, storyId);
+                var (success, message) = await storyTagService.AddTagToStoryAsync(tagId, storyId);
                 if (success)
                 {
                     return Results.Ok(message);
@@ -29,7 +29,7 @@ namespace BE_Fan_Fusion.Endpoints
 
             group.MapDelete("/{storyId}/remove-tag/{tagId}", async (IStoryTagService storyTagService, int tagId, int storyId) =>
             {
-                var (success, message) = await storyTagService.RemoveTagFromStory(tagId, storyId);
+                var (success, message) = await storyTagService.RemoveTagFromStoryAsync(tagId, storyId);
                 if (success)
                 {
                     return Results.Ok(message);
