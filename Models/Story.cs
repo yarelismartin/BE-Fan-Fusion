@@ -16,6 +16,7 @@ namespace BE_Fan_Fusion.Models
         public Category Category { get; set; }
         public List<Tag> Tags { get; set; }
         public List<Chapter> Chapters { get; set; }
+        public List<User>? FavoritedByUsers { get; set; }
 
     }
 
