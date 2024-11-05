@@ -1,6 +1,7 @@
 ﻿using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BE_Fan_Fusion.Repositories
 {
@@ -13,13 +14,16 @@ namespace BE_Fan_Fusion.Repositories
         {
             dbContext = context;
         }
-        public async Task<User> CheckUserAsync(string userUid)
+        public async Task<User?> CheckUserAsync(string userUid)
         {
-            throw new NotImplementedException();
+            return await dbContext.Users.FirstOrDefaultAsync(u => u.Uid == userUid);
         }
-        public async Task<User> GetUserByIdAsync(int userId)
+        public async Task<User?> GetUserByIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            return await dbContext.Users
+                .Include(s => s.Stories)
+                .Include(s => s.Chapters)
+                .SingleOrDefaultAsync(u => u.Id == userId);
         }
 
     }
