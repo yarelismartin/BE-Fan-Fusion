@@ -6,7 +6,8 @@ namespace BE_Fan_Fusion.Interfaces
     public interface ITagService
     {
         Task<List<TagDto>> GetAllTagsAsync();
-        Task<Tag> GetTagByIdAsync(int tagId);
+        Task<Tag?> GetTagByIdAsync(int tagId);
+        Task<User?> GetUserByIdAsync(int userId);
 
     }
 }
