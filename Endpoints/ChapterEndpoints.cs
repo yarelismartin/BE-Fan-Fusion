@@ -1,6 +1,7 @@
 ﻿using BE_Fan_Fusion.DTO;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+using BE_Fan_Fusion.Services;
 
 namespace BE_Fan_Fusion.Endpoints
 {
@@ -44,7 +45,39 @@ namespace BE_Fan_Fusion.Endpoints
                 });
             });
 
-  
+            group.MapPost("/", async (IChapterService chapterService, Chapter newcChapter) =>
+            {
+
+               try
+                {
+                    // Find the existing chapter if it exists
+                    var chapter = await chapterService.CreateOrUpdateChapterAsync(newcChapter);
+
+                    if (chapter.Id == newcChapter.Id)
+                    {
+                        return Results.Ok(chapter);
+                    }
+                    else
+                    {
+                        return Results.Created($"/chapters/{chapter.Id}", chapter);
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(ex.Message);
+                }
+            });
+
+            group.MapDelete("/{chapterId}", async (IChapterService chapterService, int chapterId) =>
+            {
+                var chaptertToDelete = await chapterService.DeleteChapterAsync(chapterId);
+                if (chaptertToDelete == null)
+                {
+                    return Results.NotFound($"There is no comment with a matching id of: {chapterId}");
+                }
+                return Results.Ok(chaptertToDelete);
+
+            });
 
         }
     }
