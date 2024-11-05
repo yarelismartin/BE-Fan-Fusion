@@ -1,6 +1,7 @@
 ﻿using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BE_Fan_Fusion.Repositories
 {
@@ -16,11 +17,32 @@ namespace BE_Fan_Fusion.Repositories
 
         public async Task<Comment> CreateCommentAsync(Comment comment)
         {
-            throw new NotImplementedException();
+            await dbContext.Comments.AddAsync(comment);
+            await dbContext.SaveChangesAsync();
+            return comment;
         }
-        public async Task<Comment> DeleteCommentAsync(int commentId)
+        public async Task<bool> UserExistsAsync(int userId)
         {
-            throw new NotImplementedException();
+            return await dbContext.Users.AnyAsync(user => user.Id == userId);
+        }
+
+        public async Task<bool> ChapterExistsAsync(int chapterId)
+        {
+            return await dbContext.Chapters.AnyAsync(chapter => chapter.Id == chapterId);
+        }
+        public async Task<Comment?> DeleteCommentAsync(int commentId)
+        {
+            var comment = await dbContext.Comments.SingleOrDefaultAsync(comment => comment.Id == commentId);
+
+            if (comment != null)
+            {
+                dbContext.Comments.Remove(comment);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return comment;
+
+
         }
 
     }
