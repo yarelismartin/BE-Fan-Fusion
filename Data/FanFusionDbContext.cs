@@ -32,8 +32,17 @@ namespace BE_Fan_Fusion.Data
                             .HasForeignKey("StoryId"), // Defines the foreign key for the Story
                         j => j.HasOne<User>() // Configures the join entity to reference the User
                             .WithMany() // Specifies that the User can have many favorited Stories
-                            .HasForeignKey("UserId") // Defines the foreign key for the User
-                    );
+                            .HasForeignKey("UserId"), // Defines the foreign key for the User
+                               j => {
+                                   j.HasKey("UserId", "StoryId"); // Ensure a composite key
+                               });
+
+            modelBuilder.Entity<Story>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Stories)
+                .HasForeignKey(s => s.UserId)
+                .IsRequired(); // Defines the foreign key for the User
+
 
               modelBuilder.Entity<Story>().HasData(StoryData.Stories);
 
