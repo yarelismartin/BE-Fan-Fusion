@@ -4,7 +4,7 @@ namespace BE_Fan_Fusion.Interfaces
 {
     public interface IStoryTagService
     {
-        Task<string> AddTagToStory(int tagId, int storyId);
+        Task<(bool Success, string Message)> AddTagToStory(int tagId, int storyId);
         Task<string> RemoveTagFromStory(int tagId, int storyId);
 
     }
