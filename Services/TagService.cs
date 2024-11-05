@@ -1,4 +1,5 @@
-﻿using BE_Fan_Fusion.Interfaces;
+﻿using BE_Fan_Fusion.DTO;
+using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
 
 namespace BE_Fan_Fusion.Services
@@ -11,9 +12,10 @@ namespace BE_Fan_Fusion.Services
         {
             _tagRepository = tagRepository;
         }
-        public async Task<List<Tag>> GetAllTagsAsync()
+        public async Task<List<TagDto>> GetAllTagsAsync()
         {
-            return await _tagRepository.GetAllTagsAsync();
+            var allTags = await _tagRepository.GetAllTagsAsync();
+            return allTags.Select(tag => new TagDto(tag)).ToList();
         }
         public async Task<Tag> GetTagByIdAsync(int tagId)
         {
