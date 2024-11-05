@@ -11,6 +11,7 @@ namespace BE_Fan_Fusion.Interfaces
         Task<Story> DeleteStoryAsync(int storyId);
         Task<List<Story>> SearchStoriesAsync(string searchValue);
         Task<List<Story>> GetStoriesByCategoryIdAsync(int categoryId);
-
+        Task<bool> UserExistsAsync(int userId);
+        Task<bool> CategoryExistsAsync(int categoryId);
     }
 }

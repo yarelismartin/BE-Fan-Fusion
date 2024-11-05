@@ -13,7 +13,7 @@ namespace BE_Fan_Fusion.Data
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        public FanFusionDbContext(DbContextOptions<FanFusionDbContext> context) : base(context)
+        public FanFusionDbContext(DbContextOptions<FanFusionDbContext> options) : base(options)
         {
 
         }

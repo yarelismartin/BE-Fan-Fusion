@@ -1,6 +1,8 @@
 ﻿using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
 using BE_Fan_Fusion.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace BE_Fan_Fusion.Services
 {
@@ -22,12 +24,44 @@ namespace BE_Fan_Fusion.Services
         }
         public async Task<Story> CreateStoryAsync(Story story)
         {
-            return await _storyRepository.CreateStoryAsync(story);
+            if (!await _storyRepository.UserExistsAsync(story.UserId))
+            {
+                throw new ArgumentException($"There is no user with the following id: {story.UserId}");
+            }
+
+            if (!await _storyRepository.CategoryExistsAsync(story.CategoryId))
+            {
+                throw new ArgumentException($"There are no categories with the following id: {story.CategoryId}");
+            }
+
+            Story newStory = new()
+            {
+                Title = story.Title,
+                Description = story.Description,
+                Image = story.Image,
+                DateCreated = DateTime.Now,
+                UserId = story.UserId,
+                TargetAudience = story.TargetAudience,
+                CategoryId = story.CategoryId,
+            };
+            return await _storyRepository.CreateStoryAsync(newStory);
         }
         public async Task<Story> UpdateStoryAsync(Story story, int storyId)
         {
+            if (!await _storyRepository.UserExistsAsync(story.UserId))
+            {
+                throw new ArgumentException($"There is no user with the following id: {story.UserId}");
+            }
+
+            if (!await _storyRepository.CategoryExistsAsync(story.CategoryId))
+            {
+                throw new ArgumentException($"There are no categories with the following id: {story.CategoryId}");
+            }
+
             return await _storyRepository.UpdateStoryAsync(story, storyId);
-        }
+        
+    }
+  
         public async Task<Story> DeleteStoryAsync(int storyId)
         {
             return await _storyRepository.DeleteStoryAsync(storyId);

@@ -1,6 +1,8 @@
 ﻿using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace BE_Fan_Fusion.Repositories
 {
@@ -15,23 +17,66 @@ namespace BE_Fan_Fusion.Repositories
         }
         public async Task<List<Story>> GetStoriesAsync()
         {
-            throw new NotImplementedException();
+            return await dbContext.Stories.ToListAsync();
         }
-        public async Task<Story> GetStoryByIdAsync(int storyId)
+        public async Task<Story?> GetStoryByIdAsync(int storyId)
         {
-            throw new NotImplementedException();
+            return await dbContext.Stories
+              .Include(s => s.Chapters)
+              .Include(s => s.Tags)
+              .Include(s => s.User)
+              .SingleOrDefaultAsync(s => s.Id == storyId);
         }
         public async Task<Story> CreateStoryAsync(Story story)
         {
-            throw new NotImplementedException();
+            await dbContext.Stories.AddAsync(story);
+            await dbContext.SaveChangesAsync();
+            return story;
+        }
+        public async Task<bool> UserExistsAsync(int userId)
+        {
+            return await dbContext.Users.AnyAsync(user => user.Id == userId);
+        }
+
+        public async Task<bool> CategoryExistsAsync(int categoryId)
+        {
+            return await dbContext.Categories.AnyAsync(category => category.Id == categoryId);
         }
         public async Task<Story> UpdateStoryAsync(Story story, int storyId)
         {
-            throw new NotImplementedException();
+             var existingStory = await dbContext.Stories.FindAsync(storyId);
+
+    // If the story doesn't exist, return null (or throw an exception based on your preference)
+    if (existingStory == null)
+    {
+        return null; // or throw new NotFoundException("Story not found");
+    }
+
+    // Update the existing story's properties
+    existingStory.Title = story.Title;
+    existingStory.Description = story.Description;
+    existingStory.Image = story.Image;
+    existingStory.UserId = story.UserId;
+    existingStory.TargetAudience = story.TargetAudience;
+    existingStory.CategoryId = story.CategoryId;
+
+    // Save changes to the database
+    await dbContext.SaveChangesAsync();
+
+    // Return the updated story
+    return existingStory;
         }
+
         public async Task<Story> DeleteStoryAsync(int storyId)
         {
-            throw new NotImplementedException();
+            var story = await dbContext.Stories.SingleOrDefaultAsync(story => story.Id == storyId);
+
+            if (story != null)
+            {
+                dbContext.Stories.Remove(story);
+                await dbContext.SaveChangesAsync();
+            }
+            return story;
         }
         public async Task<List<Story>> SearchStoriesAsync(string searchValue)
         {
@@ -42,5 +87,5 @@ namespace BE_Fan_Fusion.Repositories
             throw new NotImplementedException();
         }
     }
-}
+    }
 

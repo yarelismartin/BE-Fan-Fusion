@@ -14,7 +14,7 @@ namespace BE_Fan_Fusion.Services
         }
         public async Task<Comment> CreateCommentAsync(Comment newComment)
         {
-            if(! await _commentRepository.UserExistsAsync(newComment.UserId)) 
+            if(!await _commentRepository.UserExistsAsync(newComment.UserId)) 
             {
                 throw new ArgumentException($"There is no user with the following id: {newComment.UserId}");
             }
