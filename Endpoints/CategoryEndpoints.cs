@@ -1,4 +1,5 @@
 ﻿using System;
+using BE_Fan_Fusion.DTO;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
 
@@ -17,7 +18,7 @@ namespace BE_Fan_Fusion.Endpoints
 
                 if (!allCategories.Any())
                 {
-                    return Results.Ok("There are no aviliable categories to display");
+                    return Results.Ok(new List<Category>());
                 }
                 return Results.Ok(allCategories);
             });
