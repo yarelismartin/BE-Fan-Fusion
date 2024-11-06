@@ -1,9 +1,7 @@
 ﻿using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.DTO;
-using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
-using BE_Fan_Fusion.Services;
 using BE_Fan_Fusion.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Services;

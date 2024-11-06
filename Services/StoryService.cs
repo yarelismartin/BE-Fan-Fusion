@@ -23,7 +23,7 @@ namespace BE_Fan_Fusion.Services
             {
                 throw new ArgumentException($"There are no users with Id of: {userId}.");
             }
-            return allStories.Select(story => new StoryDTO(story, user.FavoritedStories.Contains(story))).OrderByDescending(story => story.DateCreated).ToList();
+            return allStories.Select(story => new StoryDTO(story, user.FavoritedStories?.Contains(story) ?? false)).OrderByDescending(story => story.DateCreated).ToList();
         }
         public async Task<Story> GetStoryByIdAsync(int storyId)
         {
@@ -91,7 +91,7 @@ namespace BE_Fan_Fusion.Services
             {
                 throw new ArgumentException($"There are no users with Id of: {userId}.");
             }
-            return categoryStories.Select(story => new StoryDTO(story, user.FavoritedStories.Contains(story))).OrderByDescending(story => story.DateCreated).ToList();
+            return categoryStories.Select(story => new StoryDTO(story, user.FavoritedStories?.Contains(story) ?? false)).OrderByDescending(story => story.DateCreated).ToList();
         }
         public async Task<(bool Success, string Message)> ToggleFavoriteStoriesAsync(int storyId, int userId)
         {
