@@ -11,7 +11,7 @@ namespace BE_Fan_Fusion.Interfaces
         Task<Story> UpdateStoryAsync(Story story, int storyId);
         Task<Story> DeleteStoryAsync(int storyId);
         Task<List<Story?>> SearchStoriesAsync(string searchValue);
-        Task<List<Story?>> GetStoriesByCategoryIdAsync(int categoryId);
+        Task<List<StoryDTO>> GetStoriesByCategoryIdAsync(int categoryId, int userId);
         Task<(bool Success, string Message)> ToggleFavoriteStoriesAsync(int storyId, int userId);
     }
 }

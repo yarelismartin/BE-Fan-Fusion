@@ -10,7 +10,7 @@ namespace BE_Fan_Fusion.Interfaces
         Task<Story?> UpdateStoryAsync(Story story, int storyId);
         Task<Story?> DeleteStoryAsync(int storyId);
         Task<List<Story?>> SearchStoriesAsync(string searchValue);
-        Task<List<Story?>> GetStoriesByCategoryIdAsync(int categoryId);
+        Task<List<Story>> GetStoriesByCategoryIdAsync(int categoryId);
         Task<User?> GetUserWithFavoritedStoriesAsync(int userId);
         Task<Story?> GetSingleStoryAsync(int storyId);
         Task AddFavoritedStoryAsync(Story story, User user);

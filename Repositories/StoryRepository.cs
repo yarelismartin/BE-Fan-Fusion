@@ -82,9 +82,11 @@ namespace BE_Fan_Fusion.Repositories
         {
             throw new NotImplementedException();
         }
-        public async Task<List<Story?>> GetStoriesByCategoryIdAsync(int categoryId)
+        public async Task<List<Story>> GetStoriesByCategoryIdAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            return await dbContext.Stories
+                .Where(c => c.CategoryId == categoryId)
+                .ToListAsync();
         }
 
         public async Task<User?> GetUserWithFavoritedStoriesAsync(int userId)

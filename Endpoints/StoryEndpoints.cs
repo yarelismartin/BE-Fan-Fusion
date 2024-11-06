@@ -128,32 +128,24 @@ namespace BE_Fan_Fusion.Endpoints
             });
 
             //GET STORIES BY CATEGORY MINIMAL API
-           /* app.MapGet("/stories/categories/{categoryId}", (FanFusionDbContext db, int categoryId) =>
+            group.MapGet("/users/{userId}/categories/{categoryId}", async (IStoryService storyService, int categoryId, int userId) =>
             {
-                var category = db.Categories.FirstOrDefault(c => c.Id == categoryId);
-
-                // Check if the category exists
-                if (category == null)
+                try
                 {
-                    return Results.NotFound($"Category with ID {categoryId} not found.");
+                    var storyDTOs = await storyService.GetStoriesByCategoryIdAsync(categoryId, userId);
+                    if (!storyDTOs.Any())
+                    {
+                        return Results.NotFound("No stories found for this category.");
+                    }
+                    return Results.Ok(storyDTOs);
+                }
+                catch (ArgumentException ex)
+                {
+                    // Handle not found and other argument exceptions
+                    return Results.NotFound(ex.Message);
                 }
 
-                var stories = db.Stories
-                    .Where(c => c.CategoryId == categoryId)
-                    .ToList();
-
-                var storyDTOs = stories
-                   .Select(story => new StoryDTO(story))
-                   .OrderByDescending(dto => dto.DateCreated)
-                   .ToList();
-
-                if (!stories.Any())
-                {
-                    return Results.NotFound("No stories found for this category.");
-                }
-
-                return Results.Ok(storyDTOs);
-            });*/
+            });
         }
     }
 }

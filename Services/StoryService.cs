@@ -77,9 +77,21 @@ namespace BE_Fan_Fusion.Services
         {
             return await _storyRepository.SearchStoriesAsync(searchValue);
         }
-        public async Task<List<Story>> GetStoriesByCategoryIdAsync(int categoryId)
+        public async Task<List<StoryDTO>> GetStoriesByCategoryIdAsync(int categoryId, int userId)
         {
-            return await _storyRepository.GetStoriesByCategoryIdAsync(categoryId);
+            var categoryStories = await _storyRepository.GetStoriesByCategoryIdAsync(categoryId);
+            // Check if the category exists
+            if (categoryStories == null)
+            {
+                throw new ArgumentException($"Category with ID {categoryId} not found.");
+            }
+
+            var user = await _storyRepository.GetUserWithFavoritedStoriesAsync(userId);
+            if (user == null)
+            {
+                throw new ArgumentException($"There are no users with Id of: {userId}.");
+            }
+            return categoryStories.Select(story => new StoryDTO(story, user.FavoritedStories.Contains(story))).OrderByDescending(story => story.DateCreated).ToList();
         }
         public async Task<(bool Success, string Message)> ToggleFavoriteStoriesAsync(int storyId, int userId)
         {
