@@ -42,32 +42,32 @@ namespace BE_Fan_Fusion.Repositories
         {
             return await dbContext.Categories.AnyAsync(category => category.Id == categoryId);
         }
-        public async Task<Story> UpdateStoryAsync(Story story, int storyId)
+        public async Task<Story?> UpdateStoryAsync(Story story, int storyId)
         {
              var existingStory = await dbContext.Stories.FindAsync(storyId);
 
-    // If the story doesn't exist, return null (or throw an exception based on your preference)
-    if (existingStory == null)
-    {
-        return null; // or throw new NotFoundException("Story not found");
-    }
+             // If the story doesn't exist, return null (or throw an exception based on your preference)
+                 if (existingStory == null)
+                 {
+                     return null; // or throw new NotFoundException("Story not found");
+                 }
 
-    // Update the existing story's properties
-    existingStory.Title = story.Title;
-    existingStory.Description = story.Description;
-    existingStory.Image = story.Image;
-    existingStory.UserId = story.UserId;
-    existingStory.TargetAudience = story.TargetAudience;
-    existingStory.CategoryId = story.CategoryId;
+                // Update the existing story's properties
+                existingStory.Title = story.Title;
+                existingStory.Description = story.Description;
+                existingStory.Image = story.Image;
+                existingStory.UserId = story.UserId;
+                existingStory.TargetAudience = story.TargetAudience;
+                existingStory.CategoryId = story.CategoryId;
 
-    // Save changes to the database
-    await dbContext.SaveChangesAsync();
+                // Save changes to the database
+                await dbContext.SaveChangesAsync();
 
-    // Return the updated story
-    return existingStory;
-        }
+                // Return the updated story
+                return existingStory;
+                    }
 
-        public async Task<Story> DeleteStoryAsync(int storyId)
+        public async Task<Story?> DeleteStoryAsync(int storyId)
         {
             var story = await dbContext.Stories.SingleOrDefaultAsync(story => story.Id == storyId);
 
@@ -78,14 +78,36 @@ namespace BE_Fan_Fusion.Repositories
             }
             return story;
         }
-        public async Task<List<Story>> SearchStoriesAsync(string searchValue)
+        public async Task<List<Story?>> SearchStoriesAsync(string searchValue)
         {
             throw new NotImplementedException();
         }
-        public async Task<List<Story>> GetStoriesByCategoryIdAsync(int categoryId)
+        public async Task<List<Story?>> GetStoriesByCategoryIdAsync(int categoryId)
         {
             throw new NotImplementedException();
         }
+
+        public async Task<User?> GetUserWithFavoritedStoriesAsync(int userId)
+        {
+            return await dbContext.Users
+                .Include(u => u.FavoritedStories)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+        }
+        public async Task<Story?> GetSingleStoryAsync(int storyId)
+        {
+            return await dbContext.Stories
+                .FirstOrDefaultAsync(s => s.Id == storyId);
+        }
+        public async Task AddFavoritedStoryAsync(Story story, User user)
+        {
+            user.FavoritedStories.Add(story);
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task RemoveFavoritedStoryAsync(Story story, User user)
+        {
+            user.FavoritedStories.Remove(story);
+            await dbContext.SaveChangesAsync();
     }
     }
 
+        }

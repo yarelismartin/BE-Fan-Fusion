@@ -6,6 +6,7 @@ using BE_Fan_Fusion.Repositories;
 using BE_Fan_Fusion.Services;
 using BE_Fan_Fusion.Endpoints;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -40,6 +41,10 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<IStoryTagService, StoryTagService>();
+builder.Services.AddScoped<IStoryTagRepository, StoryTagRepository>();
+
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -61,6 +66,7 @@ app.MapCategoryEndpoints();
 app.MapChapterEndpoints();
 app.MapCommentEndpoints();
 app.MapStoryEndpoints();
+app.MapStoryTagEndpoints();
 app.MapTagEndpoints();
 app.MapUserEndpoints();
 

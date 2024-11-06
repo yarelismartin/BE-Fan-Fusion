@@ -1,7 +1,9 @@
-﻿using BE_Fan_Fusion.Data;
+﻿using BE_Fan_Fusion.Interfaces;
+using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.DTO;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+using BE_Fan_Fusion.Services;
 using BE_Fan_Fusion.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Services;
@@ -12,23 +14,39 @@ namespace BE_Fan_Fusion.Endpoints
     {
         public static void MapStoryEndpoints(this IEndpointRouteBuilder routes)
         {
-            var group = routes.MapGroup("").WithTags(nameof(Story));
+            var group = routes.MapGroup("stories").WithTags(nameof(Story));
+
+            //Get Users favorite stories
+
+            group.MapGet("/{storyId}/users/{userId}/favorites", async (IStoryService storyService, int storyId, int userId) =>
+            {
+                var (success, message) = await storyService.ToggleFavoriteStoriesAsync(storyId, userId);
+
+                if (success)
+                {
+                    return Results.Ok(message);
+                }
+                else
+                {
+                    return Results.NotFound(message);
+                }
+              
+            });
 
             // Injecting StoryService into the endpoint
-            group.MapGet("/stories", async (IStoryService storyService) =>
+            group.MapGet("/", async (IStoryService storyService, int userId) =>
             {
-                var allStories = await storyService.GetStoriesAsync();
-                var storyDTOs = allStories.Select(story => new StoryDTO(story)).OrderByDescending(story => story.DateCreated).ToList();
+                var storyDtos = await storyService.GetStoriesAsync(userId);
 
-                if (!storyDTOs.Any())
+                if (!storyDtos.Any())
                 {
-                    return Results.Ok("There are no stories");
+                    return Results.Ok("There are no aviliable stories to display");
                 }
-                return Results.Ok(storyDTOs);
+                return Results.Ok(storyDtos);
             });
 
             //GET SINGLE STORY AND IT'S CHAPTERS (SaveAsDraft: false)
-            group.MapGet("/stories/{storyId}", async (IStoryService storyService, int storyId) =>
+            group.MapGet("/{storyId}", async (IStoryService storyService, int storyId) =>
             {
                 var story = await storyService.GetStoryByIdAsync(storyId);
 
@@ -59,7 +77,7 @@ namespace BE_Fan_Fusion.Endpoints
             });
 
             // CREATE NEW STORY
-            group.MapPost("/stories", async (IStoryService storyService, Story newStory) =>
+            group.MapPost("/", async (IStoryService storyService, Story newStory) =>
             {
                 try
                 {
@@ -74,7 +92,7 @@ namespace BE_Fan_Fusion.Endpoints
 
 
             //DELETE STORY
-            group.MapDelete("/stories/{storyId}", async (IStoryService storyService, int storyId) =>
+            group.MapDelete("/{storyId}", async (IStoryService storyService, int storyId) =>
             {
                 var storyToDelete = await storyService.DeleteStoryAsync(storyId);
                 if (storyToDelete == null)
@@ -86,7 +104,7 @@ namespace BE_Fan_Fusion.Endpoints
             });
 
             // EDIT STORY BY ID
-            group.MapPut("/stories/{storyId}", async (IStoryService storyService, int storyId, Story story) =>
+            group.MapPut("/{storyId}", async (IStoryService storyService, int storyId, Story story) =>
             {
                 try
                 {
@@ -102,30 +120,6 @@ namespace BE_Fan_Fusion.Endpoints
                     return Results.NotFound(ex.Message);
                 }
             });
-
-
-
-            //Search Stories by Title
-           /* group.MapGet("/stories/search", async (IStoryService storyService, string searchValue) =>
-            {
-                // Validate the search value first
-                if (string.IsNullOrWhiteSpace(searchValue))
-                {
-                    return Results.BadRequest("Search value cannot be empty.");
-                }
-
-                // Perform the search
-                var searchResults = await storyService.SearchStoriesAsync(searchValue);
-
-                // Check if any results were found
-                if (!searchResults.Any())
-                {
-                    return Results.Ok("No stories found for this search.");
-                }
-
-                // Return the list of found stories
-                return Results.Ok(searchResults);
-            });*/
 
             //GET STORIES BY CATEGORY MINIMAL API
            /* app.MapGet("/stories/categories/{categoryId}", (FanFusionDbContext db, int categoryId) =>

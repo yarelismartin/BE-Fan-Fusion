@@ -1,5 +1,7 @@
 ﻿using System;
+using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+
 
 namespace BE_Fan_Fusion.Endpoints
 {
@@ -7,7 +9,18 @@ namespace BE_Fan_Fusion.Endpoints
     {
         public static void MapCategoryEndpoints(this  IEndpointRouteBuilder routes)
         {
-            var group = routes.MapGroup("").WithTags(nameof(Category));
+            var group = routes.MapGroup("categories").WithTags(nameof(Category));
+
+            group.MapGet("/", async (ICategoryService categoryService) =>
+            {
+                var allCategories = await categoryService.GetCategoriesAsync();
+
+                if (!allCategories.Any())
+                {
+                    return Results.Ok("There are no aviliable categories to display");
+                }
+                return Results.Ok(allCategories);
+            });
         }
     }
 }

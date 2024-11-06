@@ -1,6 +1,9 @@
 ﻿using BE_Fan_Fusion.Data;
 using BE_Fan_Fusion.Interfaces;
 using BE_Fan_Fusion.Models;
+using Microsoft.EntityFrameworkCore;
+
+
 
 namespace BE_Fan_Fusion.Repositories
 {
@@ -15,7 +18,7 @@ namespace BE_Fan_Fusion.Repositories
 
         public async Task<List<Category>> GetCategoriesAsync()
         {
-            throw new NotImplementedException();
+            return await dbContext.Categories.ToListAsync();
         }
     }
 }
