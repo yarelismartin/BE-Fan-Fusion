@@ -19,6 +19,10 @@ namespace BE_Fan_Fusion.Services
         {
             var allStories = await _storyRepository.GetStoriesAsync();
             var user = await _storyRepository.GetUserWithFavoritedStoriesAsync(userId);
+            if (user == null)
+            {
+                throw new ArgumentException($"There are no users with Id of: {userId}.");
+            }
             return allStories.Select(story => new StoryDTO(story, user.FavoritedStories.Contains(story))).OrderByDescending(story => story.DateCreated).ToList();
         }
         public async Task<Story> GetStoryByIdAsync(int storyId)

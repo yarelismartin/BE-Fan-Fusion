@@ -34,15 +34,21 @@ namespace BE_Fan_Fusion.Endpoints
             });
 
             // Injecting StoryService into the endpoint
-            group.MapGet("/", async (IStoryService storyService, int userId) =>
+            group.MapGet("/users/{userId}", async (IStoryService storyService, int userId) =>
             {
-                var storyDtos = await storyService.GetStoriesAsync(userId);
-
-                if (!storyDtos.Any())
+                try
                 {
-                    return Results.Ok("There are no aviliable stories to display");
+                    var storyDtos = await storyService.GetStoriesAsync(userId);
+                    if (!storyDtos.Any())
+                    {
+                        return Results.Ok("There are no aviliable stories to display");
+                    }
+                    return Results.Ok(storyDtos);
                 }
-                return Results.Ok(storyDtos);
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(ex.Message);
+                }
             });
 
             //GET SINGLE STORY AND IT'S CHAPTERS (SaveAsDraft: false)
