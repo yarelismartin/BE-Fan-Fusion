@@ -45,7 +45,7 @@ namespace BE_Fan_Fusion.Endpoints
                 {
                     tag.Id,
                     tag.Name,
-                    Stories = tag.Stories?.Select(story => new StoryDTO(story, user.FavoritedStories.Contains(story))).OrderByDescending(story => story.DateCreated).ToList(),
+                    Stories = tag.Stories?.Select(story => new StoryDTO(story, user.FavoritedStories?.Contains(story) ?? false)).OrderByDescending(story => story.DateCreated).ToList(),
                 });
             });
         }

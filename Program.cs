@@ -43,7 +43,15 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IStoryTagService, StoryTagService>();
 builder.Services.AddScoped<IStoryTagRepository, StoryTagRepository>();
-
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://localhost:5003")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
 
 
 // Add services to the container.
@@ -52,6 +60,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

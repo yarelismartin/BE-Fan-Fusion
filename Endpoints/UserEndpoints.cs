@@ -51,7 +51,7 @@ namespace BE_Fan_Fusion.Endpoints
                     user.Username,
                     user.Email,
                     user.Uid,
-                    Stories = user.Stories?.Select(story => new StoryDTO(story, user.FavoritedStories.Contains(story))).ToList(),
+                    Stories = user.Stories?.Select(story => new StoryDTO(story, user.FavoritedStories?.Contains(story) ?? false)).ToList(),
                     Chapters = user.Chapters?.Select(chapter => new ChapterDto(chapter))
                         .Where(chapter => chapter.SaveAsDraft == true)
                         .OrderByDescending(chapter => chapter.DateCreated),
