@@ -22,7 +22,7 @@ namespace BE_Fan_Fusion.Repositories
         public async Task<Story?> GetStoryByIdAsync(int storyId)
         {
             return await dbContext.Stories
-              .Include(s => s.Chapters)
+              .Include(s => s.Chapters.Where(c => c.SaveAsDraft == false))
               .Include(s => s.Tags)
               .Include(s => s.User)
               .SingleOrDefaultAsync(s => s.Id == storyId);
