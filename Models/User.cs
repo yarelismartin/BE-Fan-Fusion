@@ -14,6 +14,7 @@ namespace BE_Fan_Fusion.Models
         public string Uid { get; set; }
         public List<Story>? Stories { get; set; }
         public List<Chapter>? Chapters { get; set; }
+        public List<Story>? FavoritedStories { get; set; }
 
     }
 

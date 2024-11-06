@@ -6,6 +6,7 @@ namespace BE_Fan_Fusion.Interfaces
     {
         Task<List<Tag>> GetAllTagsAsync();
         Task<Tag?> GetTagByIdAsync(int tagId);
+        Task<User?> GetUserAsync(int userId);
 
     }
 }

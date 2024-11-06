@@ -17,9 +17,13 @@ namespace BE_Fan_Fusion.Services
             var allTags = await _tagRepository.GetAllTagsAsync();
             return allTags.Select(tag => new TagDto(tag)).ToList();
         }
-        public async Task<Tag> GetTagByIdAsync(int tagId)
+        public async Task<Tag?> GetTagByIdAsync(int tagId)
         {
             return await _tagRepository.GetTagByIdAsync(tagId);
+        }
+        public async Task<User?> GetUserByIdAsync(int userId)
+        {
+            return await _tagRepository.GetUserAsync(userId);
         }
     }
 }

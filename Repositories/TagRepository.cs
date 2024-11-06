@@ -24,6 +24,13 @@ namespace BE_Fan_Fusion.Repositories
                 .Include(t => t.Stories)
                 .SingleOrDefaultAsync(t => t.Id == tagId);
         }
+
+        public async Task<User?> GetUserAsync(int userId)
+        {
+            return await dbContext.Users
+                .Include(u => u.FavoritedStories)
+                .SingleOrDefaultAsync(u => u.Id == userId);
+        }
     }
 }
 

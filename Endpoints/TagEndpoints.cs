@@ -25,7 +25,7 @@ namespace BE_Fan_Fusion.Endpoints
             });
 
             //Get Single
-            group.MapGet("/{tagId}", async (ITagService tagService, int tagId) =>
+            group.MapGet("/{tagId}/users/{userId}", async (ITagService tagService, int tagId, int userId) =>
             {
                 Tag? tag = await tagService.GetTagByIdAsync(tagId);
 
@@ -34,11 +34,18 @@ namespace BE_Fan_Fusion.Endpoints
                     return Results.NotFound($"No tag was found with the following id: {tagId}");
                 }
 
+                User? user = await tagService.GetUserByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return Results.NotFound($"No tag was found with the following id: {userId}");
+                }
+
                 return Results.Ok(new
                 {
                     tag.Id,
                     tag.Name,
-                    Stories = tag.Stories?.Select(story => new StoryDTO(story)).OrderByDescending(story => story.DateCreated).ToList(),
+                    Stories = tag.Stories?.Select(story => new StoryDTO(story, user.FavoritedStories.Contains(story))).OrderByDescending(story => story.DateCreated).ToList(),
                 });
             });
         }
