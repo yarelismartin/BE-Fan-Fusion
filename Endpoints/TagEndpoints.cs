@@ -19,7 +19,7 @@ namespace BE_Fan_Fusion.Endpoints
 
                 if (!tagDtos.Any())
                 {
-                    return Results.Ok("There are no aviliable tags to display");
+                    return Results.Ok(new List<TagDto>());
                 }
                 return Results.Ok(tagDtos);
             });

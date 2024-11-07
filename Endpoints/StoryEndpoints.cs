@@ -14,8 +14,7 @@ namespace BE_Fan_Fusion.Endpoints
         {
             var group = routes.MapGroup("stories").WithTags(nameof(Story));
 
-            //Get Users favorite stories
-
+            //toggle favorites button
             group.MapGet("/{storyId}/users/{userId}/favorites", async (IStoryService storyService, int storyId, int userId) =>
             {
                 var (success, message) = await storyService.ToggleFavoriteStoriesAsync(storyId, userId);
@@ -28,10 +27,9 @@ namespace BE_Fan_Fusion.Endpoints
                 {
                     return Results.NotFound(message);
                 }
-              
             });
 
-            // Injecting StoryService into the endpoint
+
             group.MapGet("/users/{userId}", async (IStoryService storyService, int userId) =>
             {
                 try
@@ -39,7 +37,7 @@ namespace BE_Fan_Fusion.Endpoints
                     var storyDtos = await storyService.GetStoriesAsync(userId);
                     if (!storyDtos.Any())
                     {
-                        return Results.Ok("There are no aviliable stories to display");
+                        return Results.Ok(new List<StoryDTO>());
                     }
                     return Results.Ok(storyDtos);
                 }
@@ -49,7 +47,6 @@ namespace BE_Fan_Fusion.Endpoints
                 }
             });
 
-            //GET SINGLE STORY AND IT'S CHAPTERS (SaveAsDraft: false)
             group.MapGet("/{storyId}", async (IStoryService storyService, int storyId) =>
             {
                 var story = await storyService.GetStoryByIdAsync(storyId);
@@ -112,15 +109,12 @@ namespace BE_Fan_Fusion.Endpoints
             {
                 try
                 {
-                    // Call the service to update the story
                     var updatedStory = await storyService.UpdateStoryAsync(story, storyId);
 
-                    // Check if the update was successful
                     return Results.Ok(updatedStory);
                 }
                 catch (ArgumentException ex)
                 {
-                    // Handle not found and other argument exceptions
                     return Results.NotFound(ex.Message);
                 }
             });
@@ -133,13 +127,12 @@ namespace BE_Fan_Fusion.Endpoints
                     var storyDTOs = await storyService.GetStoriesByCategoryIdAsync(categoryId, userId);
                     if (!storyDTOs.Any())
                     {
-                        return Results.NotFound("No stories found for this category.");
+                        return Results.Ok(new List<StoryDTO>());
                     }
                     return Results.Ok(storyDTOs);
                 }
                 catch (ArgumentException ex)
                 {
-                    // Handle not found and other argument exceptions
                     return Results.NotFound(ex.Message);
                 }
 
