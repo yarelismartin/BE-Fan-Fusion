@@ -19,8 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BE-Fan-Fusion\BE-Fan-Fusion.csproj" />
-    <ProjectReference Include="..\BE-Fan-Fusion\fan-fusion-be\BE-Fan-Fusion.csproj" />
+	  <ProjectReference Include="..\fan-fusion-be\BE-Fan-Fusion.csproj" />
   </ItemGroup>
 
 </Project>
