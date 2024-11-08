@@ -6,7 +6,7 @@ using BE_Fan_Fusion.Models;
 namespace BE_Fan_Fusion.Endpoints
 {
     public static class UserEndpoints
-    {
+    {      //Testing save
         //This is an interface provided by ASP.NET Core that helps you define and configure your API endpoints.
         public static void MapUserEndpoints(this IEndpointRouteBuilder routes)
         {
