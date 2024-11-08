@@ -21,6 +21,7 @@ namespace BE_Fan_Fusion.Repositories
         public async Task<User?> GetUserByIdAsync(int userId)
         {
             return await dbContext.Users
+                .Include(s => s.FavoritedStories)
                 .Include(s => s.Stories)
                 .Include(s => s.Chapters)
                 .SingleOrDefaultAsync(u => u.Id == userId);

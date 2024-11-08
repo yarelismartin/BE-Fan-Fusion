@@ -6,7 +6,7 @@ using BE_Fan_Fusion.Models;
 namespace BE_Fan_Fusion.Endpoints
 {
     public static class UserEndpoints
-    {
+    {     
         //This is an interface provided by ASP.NET Core that helps you define and configure your API endpoints.
         public static void MapUserEndpoints(this IEndpointRouteBuilder routes)
         {
@@ -52,6 +52,7 @@ namespace BE_Fan_Fusion.Endpoints
                     user.Email,
                     user.Uid,
                     Stories = user.Stories?.Select(story => new StoryDTO(story, user.FavoritedStories?.Contains(story) ?? false)).ToList(),
+                    FavoritedStories = user.FavoritedStories?.Select(story => new StoryDTO(story, user.FavoritedStories?.Contains(story) ?? false)).ToList(),
                     Chapters = user.Chapters?.Select(chapter => new ChapterDto(chapter))
                         .Where(chapter => chapter.SaveAsDraft == true)
                         .OrderByDescending(chapter => chapter.DateCreated),
