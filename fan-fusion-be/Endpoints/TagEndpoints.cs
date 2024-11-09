@@ -38,7 +38,7 @@ namespace BE_Fan_Fusion.Endpoints
 
                 if (user == null)
                 {
-                    return Results.NotFound($"No tag was found with the following id: {userId}");
+                    return Results.NotFound($"No user was found with the following id: {userId}");
                 }
 
                 return Results.Ok(new

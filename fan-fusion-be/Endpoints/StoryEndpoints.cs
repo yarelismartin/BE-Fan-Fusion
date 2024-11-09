@@ -119,7 +119,7 @@ namespace BE_Fan_Fusion.Endpoints
                 }
             });
 
-            //GET STORIES BY CATEGORY MINIMAL API
+            //GET STORIES BY CATEGORY
             group.MapGet("/users/{userId}/categories/{categoryId}", async (IStoryService storyService, int categoryId, int userId) =>
             {
                 try
