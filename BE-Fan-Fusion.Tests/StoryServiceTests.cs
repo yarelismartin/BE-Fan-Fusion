@@ -108,8 +108,148 @@ namespace BE_Fan_Fusion.Tests
             Assert.Equal("Updated Audience", result.TargetAudience);
             Assert.Equal(2, result.CategoryId);
         }
+
+        [Fact]
+        public async Task DeleteStoryAsync_ValidId_ReturnsDeletedStory()
+        {
+            // Arrange
+            var mockRepository = new Mock<IStoryRepository>();
+            var storyId = 1;
+            var sampleStory = new Story
+            {
+                Id = 1,
+                Title = "A Second Chance at Hogwarts",
+                Description = "A time-travel story where Harry returns to his first year to fix everything.",
+                Image = "https://images.unsplash.com/photo-1527684651001-731c474bbb5a?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                DateCreated = new DateTime(2024, 10, 01),
+                TargetAudience = "Young Adult",
+                UserId = 15,
+                CategoryId = 3
+            };
+            mockRepository.Setup(repo => repo.DeleteStoryAsync(storyId)).ReturnsAsync(sampleStory);
+
+            var storyService = new StoryService(mockRepository.Object);
+
+            // Act
+            var result = await storyService.DeleteStoryAsync(storyId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(storyId, result.Id);
+            Assert.Equal("A Second Chance at Hogwarts", result.Title);
+
+            mockRepository.Verify(repo => repo.DeleteStoryAsync(storyId), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteStoryAsync_InvalidId_ReturnsNull()
+        {
+            // Arrange
+            var mockRepository = new Mock<IStoryRepository>();
+            var invalidStoryId = 99;
+            mockRepository.Setup(repo => repo.DeleteStoryAsync(invalidStoryId)).ReturnsAsync((Story?)null);
+
+            var storyService = new StoryService(mockRepository.Object);
+
+            // Act
+            var result = await storyService.DeleteStoryAsync(invalidStoryId);
+
+            // Assert
+            Assert.Null(result);
+
+            mockRepository.Verify(repo => repo.DeleteStoryAsync(invalidStoryId), Times.Once);
+        }
+
+        [Fact]
+        public async Task CreateStoryAsync_ShouldReturnCreatedStory_WhenInputsAreValid()
+        {
+            // Arrange
+            var newStory = new Story
+            {
+                Title = "Test Story",
+                Description = "Test Description",
+                Image = "test.jpg",
+                UserId = 1,
+                CategoryId = 2,
+                TargetAudience = "General",
+            };
+            var createdStory = new Story
+            {
+                Id = 1,
+                Title = newStory.Title,
+                Description = newStory.Description,
+                Image = newStory.Image,
+                UserId = newStory.UserId,
+                CategoryId = newStory.CategoryId,
+                TargetAudience = newStory.TargetAudience,
+                DateCreated = DateTime.Now
+            };
+
+            // Set up mock repository behavior
+            _mockStoryRepository.Setup(repo => repo.UserExistsAsync(newStory.UserId))
+                .ReturnsAsync(true);
+            _mockStoryRepository.Setup(repo => repo.CategoryExistsAsync(newStory.CategoryId))
+                .ReturnsAsync(true);
+            _mockStoryRepository.Setup(repo => repo.CreateStoryAsync(It.IsAny<Story>()))
+                .ReturnsAsync(createdStory);
+
+            // Act
+            var result = await _storyService.CreateStoryAsync(newStory);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(createdStory.Id, result.Id);
+            Assert.Equal(createdStory.Title, result.Title);
+            Assert.Equal(createdStory.Description, result.Description);
+            Assert.Equal(createdStory.UserId, result.UserId);
+
+            // Verify repository methods were called
+            _mockStoryRepository.Verify(repo => repo.UserExistsAsync(newStory.UserId), Times.Once);
+            _mockStoryRepository.Verify(repo => repo.CategoryExistsAsync(newStory.CategoryId), Times.Once);
+            _mockStoryRepository.Verify(repo => repo.CreateStoryAsync(It.IsAny<Story>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task CreateStoryAsync_ShouldThrowArgumentException_WhenUserDoesNotExist()
+        {
+            // Arrange
+            var newStory = new Story { Title = "Test Story", UserId = 1, CategoryId = 2 };
+            // Set up mock repository to indicate user doesn't exist
+            _mockStoryRepository.Setup(repo => repo.UserExistsAsync(newStory.UserId))
+                .ReturnsAsync(false);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(async () =>
+               await _storyService.CreateStoryAsync(newStory));
+
+            // Verify that the category check and story creation were never called
+            _mockStoryRepository.Verify(repo => repo.CategoryExistsAsync(It.IsAny<int>()), Times.Never);
+            _mockStoryRepository.Verify(repo => repo.CreateStoryAsync(It.IsAny<Story>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task CreateStoryAsync_ShouldThrowArgumentException_WhenCategoryDoesNotExist()
+        {
+            // Arrange
+            var newStory = new Story { Title = "Test Story", UserId = 1, CategoryId = 2 };
+
+            // Set up mock repository to indicate user exists but category does not
+            _mockStoryRepository.Setup(repo => repo.UserExistsAsync(newStory.UserId))
+                .ReturnsAsync(true);
+            _mockStoryRepository.Setup(repo => repo.CategoryExistsAsync(newStory.CategoryId))
+                .ReturnsAsync(false);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(async () =>
+                await _storyService.CreateStoryAsync(newStory));
+
+            // Verify that the story creation was never called
+            _mockStoryRepository.Verify(repo => repo.CreateStoryAsync(It.IsAny<Story>()), Times.Never);
+        }
+
     }
 }
+    
         // Arrange: to set up the inputs to configure or declare the variables for the test.
         // Act: to do the actions like a method call or controller call.
         // Assert: to evaluate the results
